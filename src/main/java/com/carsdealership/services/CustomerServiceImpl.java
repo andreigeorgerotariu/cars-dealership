@@ -49,10 +49,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomerById(long id) {
-        if (!customerRepository.existsById(id)) {
+        if (customerRepository.existsById(id)) {
+            customerRepository.deleteById(id);
+            log.info("Customer with id " + id + " was deleted.");
+        } else {
             throw new IllegalArgumentException("Customer with id " + id + " does not exist.");
         }
-        customerRepository.deleteById(id);
-        log.info("Customer with id " + id + " was deleted.");
     }
 }
