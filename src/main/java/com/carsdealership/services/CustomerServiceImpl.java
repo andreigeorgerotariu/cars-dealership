@@ -1,5 +1,6 @@
 package com.carsdealership.services;
 
+import com.carsdealership.exceptions.UserNotFoundException;
 import com.carsdealership.models.dtos.CustomerDTO;
 import com.carsdealership.models.entities.Customer;
 import com.carsdealership.repositories.CustomerRepository;
@@ -53,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.deleteById(id);
             log.info("Customer with id " + id + " was deleted.");
         } else {
-            throw new IllegalArgumentException("Customer with id " + id + " does not exist.");
+            throw new UserNotFoundException("Customer with id " + id + " does not exist.");
         }
     }
 }
