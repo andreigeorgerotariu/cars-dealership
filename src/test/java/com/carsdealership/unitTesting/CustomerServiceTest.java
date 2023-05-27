@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -62,5 +66,63 @@ class CustomerServiceTest {
         Assertions.assertThrows(RuntimeException.class, () -> {
             customerService.createCustomer(customerDTO);
         });
+    }
+
+    @Test
+    void testGetAllCustomersShouldPass() {
+        // GIVEN
+        List<Customer> customers = new ArrayList<>();
+        customers.add(Customer.builder()
+                .firstName("Andrew")
+                .lastName("Raynolds")
+                .email("andrew@mail.com")
+                .build());
+        customers.add(Customer.builder()
+                .firstName("Andrew")
+                .lastName("Raynolds")
+                .email("andrew@mail.com")
+                .build());
+
+        List<CustomerDTO> expectedCustomerDTOs = new ArrayList<>();
+        expectedCustomerDTOs.add(CustomerDTO.builder()
+                .firstName("Andrew")
+                .lastName("Raynolds")
+                .email("andrew@mail.com")
+                .build());
+        expectedCustomerDTOs.add(CustomerDTO.builder()
+                .firstName("Andrew")
+                .lastName("Raynolds")
+                .email("andrew@mail.com")
+                .build());
+
+        when(customerRepository.findAll()).thenReturn(customers);
+
+        Mockito.when(objectMapper.convertValue(Mockito.any(Customer.class), Mockito.eq(CustomerDTO.class)))
+                .thenAnswer(invocation -> {
+                    Customer customer = invocation.getArgument(0);
+                    return CustomerDTO.builder()
+                            .firstName(customer.getFirstName())
+                            .lastName(customer.getLastName())
+                            .email(customer.getEmail())
+                            .build();
+                });
+
+        // WHEN
+        List<CustomerDTO> result = customerService.getAllCustomers();
+
+        // THEN
+        Assertions.assertEquals(expectedCustomerDTOs, result);
+    }
+
+    @Test
+    void testGetAllCustomersShouldThrowException() {
+        // GIVEN
+        when(customerRepository.findAll()).thenReturn(new ArrayList<>());
+
+        // WHEN
+        List<CustomerDTO> result = customerService.getAllCustomers();
+
+        // THEN
+        Assertions.assertTrue(result.isEmpty());
     }
 }

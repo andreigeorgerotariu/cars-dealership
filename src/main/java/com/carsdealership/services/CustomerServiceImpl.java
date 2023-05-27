@@ -9,9 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     private final ObjectMapper objectMapper;
     private final CustomerValidationService customerValidationService;
@@ -34,5 +37,13 @@ public class CustomerServiceImpl implements CustomerService{
         Customer savedCustomer = customerRepository.save(customer);
         log.info("Customer " + savedCustomer.getFirstName() + " was created");
         return objectMapper.convertValue(savedCustomer, CustomerDTO.class);
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomers() {
+        List<Customer> customersFound = customerRepository.findAll();
+        List<CustomerDTO> customersFoundDTO = new ArrayList<>();
+        customersFound.forEach(customer -> customersFoundDTO.add(objectMapper.convertValue(customer, CustomerDTO.class)));
+        return customersFoundDTO;
     }
 }
