@@ -13,18 +13,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerServiceImpl implements CustomerService{
 
-    final private ObjectMapper objectMapper;
-    final private CustomerRepository customerRepository;
+    private final ObjectMapper objectMapper;
+    private final CustomerValidationService customerValidationService;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerServiceImpl(ObjectMapper objectMapper, CustomerRepository customerRepository) {
+    public CustomerServiceImpl(ObjectMapper objectMapper,
+                               CustomerRepository customerRepository,
+                               CustomerValidationService customerValidationService) {
         this.objectMapper = objectMapper;
         this.customerRepository = customerRepository;
+        this.customerValidationService = customerValidationService;
     }
 
     @Transactional
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+        customerValidationService.emailFormatValidation(customerDTO.getEmail());
         Customer customer = objectMapper.convertValue(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
         log.info("Customer " + savedCustomer.getFirstName() + " was created");
