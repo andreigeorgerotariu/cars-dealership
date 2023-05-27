@@ -1,6 +1,8 @@
 package com.carsdealership.models.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
@@ -15,12 +17,15 @@ public class CustomerDTO implements Serializable {
 
 
     private Long id;
-    @NotBlank(message = "first name must not be blank")
-    @Size(min = 2, max = 20, message = "first name must contain between 2 and 20 characters" )
+    @NotBlank(message = "First name must not be blank")
+    @Size(min = 2, max = 20, message = "First name must contain between 2 and 20 characters" )
     private String firstName;
-    @NotBlank(message = "last name must not be blank")
-    @Size(min = 2, max = 20, message = "first name must contain between 2 and 20 characters" )
+    @NotBlank(message = "Last name must not be blank")
+    @Size(min = 2, max = 20, message = "Last name must contain between 2 and 20 characters" )
     private String lastName;
     @NotBlank(message = "email must not be blank")
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
+            flags = Pattern.Flag.CASE_INSENSITIVE,
+            message = "email is not valid")
     private String email;
 }

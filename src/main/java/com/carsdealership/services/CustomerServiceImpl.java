@@ -35,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerValidationService.emailFormatValidation(customerDTO.getEmail());
         Customer customer = objectMapper.convertValue(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
-        log.info("Customer " + savedCustomer.getFirstName() + " was created");
+        log.info("Customer " + savedCustomer.getFirstName() + " was created.");
         return objectMapper.convertValue(savedCustomer, CustomerDTO.class);
     }
 
@@ -45,5 +45,14 @@ public class CustomerServiceImpl implements CustomerService {
         List<CustomerDTO> customersFoundDTO = new ArrayList<>();
         customersFound.forEach(customer -> customersFoundDTO.add(objectMapper.convertValue(customer, CustomerDTO.class)));
         return customersFoundDTO;
+    }
+
+    @Override
+    public void deleteCustomerById(long id) {
+        if (!customerRepository.existsById(id)) {
+            throw new IllegalArgumentException("Customer with id " + id + " does not exist.");
+        }
+        customerRepository.deleteById(id);
+        log.info("Customer with id " + id + " was deleted.");
     }
 }

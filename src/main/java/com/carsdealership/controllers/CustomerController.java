@@ -29,4 +29,10 @@ public class CustomerController {
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         return ResponseEntity.ok(customerService.getAllCustomers());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomerById(@PathVariable long id) {
+        customerService.deleteCustomerById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
