@@ -2,6 +2,7 @@ package com.carsdealership.controllers;
 
 import com.carsdealership.models.dtos.CustomerDTO;
 import com.carsdealership.services.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody @Valid CustomerDTO customerDTO) {
         return ResponseEntity.ok(customerService.createCustomer(customerDTO));
     }
 }
