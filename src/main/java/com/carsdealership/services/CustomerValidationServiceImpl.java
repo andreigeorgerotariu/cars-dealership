@@ -11,8 +11,8 @@ public class CustomerValidationServiceImpl implements CustomerValidationService 
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     @Override
-    public void emailValidation(String email) {
-        if (EMAIL_PATTERN.matcher(email).matches()) {
+    public void emailFormatValidation(String email) {
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
             throw new RuntimeException("Email format is not valid");
         }
     }

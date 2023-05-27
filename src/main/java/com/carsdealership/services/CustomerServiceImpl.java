@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        customerValidationService.emailValidation(customerDTO.getEmail());
+        customerValidationService.emailFormatValidation(customerDTO.getEmail());
         Customer customer = objectMapper.convertValue(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
         log.info("Customer " + savedCustomer.getFirstName() + " was created");
