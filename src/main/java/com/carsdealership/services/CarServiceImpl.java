@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 public class CarServiceImpl implements CarService {
@@ -30,5 +33,13 @@ public class CarServiceImpl implements CarService {
         log.info("Car " + savedCar.getCarBrand() + " model " + savedCar.getCarModel() +
                 " from year " + savedCar.getYear() + " was successfully created");
         return objectMapper.convertValue(savedCar, CarDTO.class);
+    }
+
+    @Override
+    public List<CarDTO> getAllCars() {
+        List<Car>carsFound = carRepository.findAll();
+        List<CarDTO> carsFoundDTO = new ArrayList<>();
+        carsFound.forEach(car -> carsFoundDTO.add(objectMapper.convertValue(car, CarDTO.class)));
+        return carsFoundDTO;
     }
 }
