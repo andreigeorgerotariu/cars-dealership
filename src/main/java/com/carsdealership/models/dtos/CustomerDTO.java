@@ -15,7 +15,6 @@ import java.io.Serializable;
 @ToString
 public class CustomerDTO implements Serializable {
 
-
     private long id;
     @NotBlank(message = "First name must not be blank")
     @Size(min = 2, max = 20, message = "First name must contain between 2 and 20 characters" )
