@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.deleteById(id);
             log.info("Customer with id " + id + " was successfully deleted.");
         } else {
-            throw new CustomerNotFoundException("Customer with id " + id + " does not exist.");
+            throw new CustomerNotFoundException("Customer not found.");
         }
     }
 
