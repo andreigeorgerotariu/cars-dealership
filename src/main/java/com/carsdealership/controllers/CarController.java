@@ -35,4 +35,9 @@ public class CarController {
         carService.deleteCarById(carId);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{carId}")
+    public ResponseEntity<CarDTO> updateCarById(@PathVariable long carId, @RequestBody @Valid CarDTO carDTO){
+        return ResponseEntity.ok(carService.updateCarById(carId, carDTO));
+    }
 }

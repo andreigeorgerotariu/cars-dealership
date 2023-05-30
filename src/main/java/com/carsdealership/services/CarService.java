@@ -10,4 +10,6 @@ public interface CarService {
     List<CarDTO> getAllCars();
 
     void deleteCarById(long CarId);
+
+    CarDTO updateCarById(long carId, CarDTO carDTO);
 }

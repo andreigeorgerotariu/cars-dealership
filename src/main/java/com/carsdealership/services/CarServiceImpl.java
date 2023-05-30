@@ -53,4 +53,17 @@ public class CarServiceImpl implements CarService {
             throw new CarNotFoundException("Car with id " + carId + " does not exist.");
         }
     }
+
+    @Override
+    public CarDTO updateCarById(long carId, CarDTO carDTO) {
+        Car carFound = carRepository.findById(carId)
+                .orElseThrow(() -> new CarNotFoundException("Car with id " + carId + " does not exist."));
+        carFound.setCarBrand(carDTO.getCarBrand());
+        carFound.setCarModel(carDTO.getCarModel());
+        carFound.setYear(carFound.getYear());
+        carFound.setPrice(carDTO.getPrice());
+        Car carSaved = carRepository.save(carFound);
+        log.info("Car with id " + carId + " was successfully updated");
+        return objectMapper.convertValue(carSaved, carDTO.getClass());
+    }
 }
