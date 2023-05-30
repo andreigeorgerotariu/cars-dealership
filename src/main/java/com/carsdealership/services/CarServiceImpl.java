@@ -1,5 +1,6 @@
 package com.carsdealership.services;
 
+import com.carsdealership.exceptions.CarNotFoundException;
 import com.carsdealership.models.dtos.CarDTO;
 import com.carsdealership.models.entities.Car;
 import com.carsdealership.repositories.CarRepository;
@@ -41,5 +42,15 @@ public class CarServiceImpl implements CarService {
         List<CarDTO> carsFoundDTO = new ArrayList<>();
         carsFound.forEach(car -> carsFoundDTO.add(objectMapper.convertValue(car, CarDTO.class)));
         return carsFoundDTO;
+    }
+
+    @Override
+    public void deleteCarById(long carId) {
+        if (carRepository.existsById(carId)){
+            carRepository.deleteById(carId);
+            log.info("Car with id " + carId + " was successfully deleted.");
+        }else{
+            throw new CarNotFoundException("Car with id " + carId + " does not exist.");
+        }
     }
 }

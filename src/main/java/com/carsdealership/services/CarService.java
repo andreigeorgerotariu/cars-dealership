@@ -8,4 +8,6 @@ public interface CarService {
     CarDTO createCar(CarDTO carDTO);
 
     List<CarDTO> getAllCars();
+
+    void deleteCarById(long CarId);
 }
