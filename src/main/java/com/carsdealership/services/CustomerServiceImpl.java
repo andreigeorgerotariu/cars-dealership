@@ -1,6 +1,6 @@
 package com.carsdealership.services;
 
-import com.carsdealership.exceptions.UserNotFoundException;
+import com.carsdealership.exceptions.CustomerNotFoundException;
 import com.carsdealership.models.dtos.CustomerDTO;
 import com.carsdealership.models.entities.Customer;
 import com.carsdealership.repositories.CustomerRepository;
@@ -54,7 +54,19 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.deleteById(id);
             log.info("Customer with id " + id + " was deleted.");
         } else {
-            throw new UserNotFoundException("Customer with id " + id + " does not exist.");
+            throw new CustomerNotFoundException("Customer with id " + id + " does not exist.");
         }
+    }
+
+    @Override
+    public CustomerDTO updateCustomerById(long id, CustomerDTO customerDTO) {
+        Customer customerFound = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        customerFound.setFirstName(customerDTO.getFirstName());
+        customerFound.setLastName(customerDTO.getLastName());
+        customerFound.setEmail(customerDTO.getEmail());
+        Customer customerSaved = customerRepository.save(customerFound);
+        log.info("Customer with id " + id + " was successfully updated");
+        return objectMapper.convertValue(customerSaved, CustomerDTO.class);
     }
 }
