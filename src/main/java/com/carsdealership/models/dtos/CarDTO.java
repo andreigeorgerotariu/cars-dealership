@@ -22,7 +22,7 @@ public class CarDTO implements Serializable {
     @NotBlank(message = "Car Model must not be blank")
     @Size(min = 2, max = 20, message = "Car Model must contain between 2 and 20 characters")
     private String carModel;
-    @NotNull(message = "Year of manufacture must not be null")
+    @com.carsdealership.models.constraints.YearRange(message = "Year of manufacture must be between 1960 and the current year")
     private int year;
     @NotNull(message = "Price must not be null")
     @Positive(message = "Price must be a positive value")
