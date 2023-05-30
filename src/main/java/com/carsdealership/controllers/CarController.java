@@ -29,4 +29,10 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> getAllCars(){
         return ResponseEntity.ok(carService.getAllCars());
     }
+
+    @DeleteMapping("/{carId}")
+    public ResponseEntity<Void> deleteCarById(@PathVariable long carId){
+        carService.deleteCarById(carId);
+        return ResponseEntity.noContent().build();
+    }
 }
