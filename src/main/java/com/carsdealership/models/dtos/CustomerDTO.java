@@ -22,9 +22,9 @@ public class CustomerDTO implements Serializable {
     @NotBlank(message = "Last name must not be blank")
     @Size(min = 2, max = 20, message = "Last name must contain between 2 and 20 characters" )
     private String lastName;
-    @NotBlank(message = "email must not be blank")
+    @NotBlank(message = "Email must not be blank")
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE,
-            message = "email is not valid")
+            message = "Email is not valid")
     private String email;
 }

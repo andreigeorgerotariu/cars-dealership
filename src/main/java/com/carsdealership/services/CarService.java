@@ -9,7 +9,7 @@ public interface CarService {
 
     List<CarDTO> getAllCars();
 
-    void deleteCarById(long CarId);
+    void deleteCarById(long carId);
 
     CarDTO updateCarById(long carId, CarDTO carDTO);
 }

@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class CarServiceImpl implements CarService {
             carRepository.deleteById(carId);
             log.info("Car with id " + carId + " was successfully deleted.");
         }else{
-            throw new CarNotFoundException("Car with id " + carId + " does not exist.");
+            throw new CarNotFoundException("Car not found.");
         }
     }
 
