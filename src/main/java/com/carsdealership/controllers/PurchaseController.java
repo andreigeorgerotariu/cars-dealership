@@ -5,10 +5,9 @@ import com.carsdealership.services.PurchaseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/purchases")
@@ -24,5 +23,10 @@ public class PurchaseController {
     @PostMapping
     public ResponseEntity<PurchaseDTO> createPurchase(@RequestBody @Valid PurchaseDTO purchaseDTO){
         return ResponseEntity.ok(purchaseService.createPurchase(purchaseDTO));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PurchaseDTO>> getAllPurchases(){
+        return ResponseEntity.ok(purchaseService.getAllPurchases());
     }
 }
