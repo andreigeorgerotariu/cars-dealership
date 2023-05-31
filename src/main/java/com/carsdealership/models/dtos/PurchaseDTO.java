@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 public class PurchaseDTO implements Serializable {
 
-    private long id;
+    private long purchaseId;
     @NotNull(message = "Purchase date must not be blank")
     private LocalDateTime purchaseDate;
 }

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor
@@ -20,5 +20,5 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "purchase_date")
-    private Date purchaseDate;
+    private LocalDateTime purchaseDate;
 }
