@@ -1,6 +1,8 @@
 package com.carsdealership.services;
 
+import com.carsdealership.models.dtos.CustomerDTO;
+
 public interface CustomerValidationService {
 
-    void emailFormatValidation(String email);
+    void validateCustomerDTO(CustomerDTO customerDTO);
 }
