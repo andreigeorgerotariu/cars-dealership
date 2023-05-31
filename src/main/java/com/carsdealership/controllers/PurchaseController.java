@@ -29,4 +29,10 @@ public class PurchaseController {
     public ResponseEntity<List<PurchaseDTO>> getAllPurchases(){
         return ResponseEntity.ok(purchaseService.getAllPurchases());
     }
+
+    @DeleteMapping("/{purchaseId}")
+    public ResponseEntity<Void> deletePurchaseById(@PathVariable long purchaseId){
+        purchaseService.deletePurchaseById(purchaseId);
+        return ResponseEntity.noContent().build();
+    }
 }

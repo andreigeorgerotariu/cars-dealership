@@ -1,5 +1,6 @@
 package com.carsdealership.services;
 
+import com.carsdealership.exceptions.PurchaseNotFoundException;
 import com.carsdealership.models.dtos.PurchaseDTO;
 import com.carsdealership.models.entities.Purchase;
 import com.carsdealership.repositories.PurchaseRepository;
@@ -41,5 +42,15 @@ public class PurchaseServiceImpl implements PurchaseService {
         List<PurchaseDTO> purchasesFoundDTO = new ArrayList<>();
         purchasesFound.forEach(purchase -> purchasesFoundDTO.add(objectMapper.convertValue(purchase, PurchaseDTO.class)));
         return purchasesFoundDTO;
+    }
+
+    @Override
+    public void deletePurchaseById(long id) {
+        if (purchaseRepository.existsById(id)){
+            purchaseRepository.deleteById(id);
+            log.info("Purchase with id " + id + " was successfully deleted.");
+        } else {
+            throw new PurchaseNotFoundException("Purchase not found.");
+        }
     }
 }

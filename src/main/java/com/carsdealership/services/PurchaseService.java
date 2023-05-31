@@ -9,4 +9,6 @@ public interface PurchaseService {
     PurchaseDTO createPurchase(PurchaseDTO purchaseDTO);
 
     List<PurchaseDTO> getAllPurchases();
+
+    void deletePurchaseById(long purchaseId);
 }
