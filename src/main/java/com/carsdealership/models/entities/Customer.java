@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -28,4 +29,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Purchase> purchases;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "customers_cars",
+            joinColumns = @JoinColumn(name = "customers_id"),
+            inverseJoinColumns = @JoinColumn(name = "cars_id"))
+    private Set<Car> cars;
 }
