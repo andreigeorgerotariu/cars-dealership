@@ -95,6 +95,18 @@ class CustomersServiceIntegrationTest {
         verify(customerRepository, times(1)).findAll();
     }
 
+    @Test
+    void TestDeleteCustomerByIdShouldPass() throws Exception {
+        Long customerId = 1L;
+        when(customerRepository.existsById(customerId)).thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/customers/{id}", customerId))
+                .andExpect(status().isNoContent());
+
+        verify(customerRepository, times(1)).existsById(customerId);
+        verify(customerRepository, times(1)).deleteById(customerId);
+    }
+
     private String objectToString(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
