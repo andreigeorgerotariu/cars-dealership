@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<CarDTO> getAllCars() {
-        List<Car>carsFound = carRepository.findAll();
+        List<Car> carsFound = carRepository.findAll();
         List<CarDTO> carsFoundDTO = new ArrayList<>();
         carsFound.forEach(car -> carsFoundDTO.add(objectMapper.convertValue(car, CarDTO.class)));
         return carsFoundDTO;
@@ -48,10 +46,10 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCarById(long carId) {
-        if (carRepository.existsById(carId)){
+        if (carRepository.existsById(carId)) {
             carRepository.deleteById(carId);
             log.info("Car with id " + carId + " was successfully deleted.");
-        }else{
+        } else {
             throw new CarNotFoundException("Car not found.");
         }
     }
