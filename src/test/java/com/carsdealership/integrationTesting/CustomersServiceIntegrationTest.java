@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -62,6 +64,37 @@ class CustomersServiceIntegrationTest {
 
         verify(customerRepository, times(1)).save(any(Customer.class));
     }
+
+    @Test
+    void TestAllCustomersShouldPass() throws Exception {
+        Customer customer1 = Customer.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .email("johndoe@example.com")
+                .build();
+
+        Customer customer2 = Customer.builder()
+                .id(2L)
+                .firstName("Jane")
+                .lastName("Smith")
+                .email("janesmith@example.com")
+                .build();
+
+        when(customerRepository.findAll()).thenReturn(List.of(customer1, customer2));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/customers"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].firstName").value(customer1.getFirstName()))
+                .andExpect(jsonPath("$[0].lastName").value(customer1.getLastName()))
+                .andExpect(jsonPath("$[0].email").value(customer1.getEmail()))
+                .andExpect(jsonPath("$[1].firstName").value(customer2.getFirstName()))
+                .andExpect(jsonPath("$[1].lastName").value(customer2.getLastName()))
+                .andExpect(jsonPath("$[1].email").value(customer2.getEmail()));
+
+        verify(customerRepository, times(1)).findAll();
+    }
+
     private String objectToString(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
@@ -70,5 +103,4 @@ class CustomersServiceIntegrationTest {
         }
         return null;
     }
-
 }
