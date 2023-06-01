@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -69,16 +70,16 @@ class CustomersServiceIntegrationTest {
     void TestAllCustomersShouldPass() throws Exception {
         Customer customer1 = Customer.builder()
                 .id(1L)
-                .firstName("John")
-                .lastName("Doe")
-                .email("johndoe@example.com")
+                .firstName("Joe")
+                .lastName("Biden")
+                .email("joebiden@example.com")
                 .build();
 
         Customer customer2 = Customer.builder()
                 .id(2L)
-                .firstName("Jane")
-                .lastName("Smith")
-                .email("janesmith@example.com")
+                .firstName("Donald")
+                .lastName("Trump")
+                .email("donaldtrump@example.com")
                 .build();
 
         when(customerRepository.findAll()).thenReturn(List.of(customer1, customer2));
@@ -105,6 +106,37 @@ class CustomersServiceIntegrationTest {
 
         verify(customerRepository, times(1)).existsById(customerId);
         verify(customerRepository, times(1)).deleteById(customerId);
+    }
+
+    @Test
+    void TestUpdateCustomerByIdShouldPass() throws Exception {
+        Long customerId = 1L;
+        Customer existingCustomer = new Customer();
+        existingCustomer.setId(customerId);
+        existingCustomer.setFirstName("George");
+        existingCustomer.setLastName("Bush");
+        existingCustomer.setEmail("911insidejob@example.com");
+
+        when(customerRepository.findById(customerId)).thenReturn(Optional.of(existingCustomer));
+
+        existingCustomer.setFirstName(customerDTO.getFirstName());
+        existingCustomer.setLastName(customerDTO.getLastName());
+        existingCustomer.setEmail(customerDTO.getEmail());
+
+        Customer updatedCustomer = objectMapper.convertValue(existingCustomer, Customer.class);
+        when(customerRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/customers/{id}", customerId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectToString(customerDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(customerId))
+                .andExpect(jsonPath("$.firstName").value(customerDTO.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(customerDTO.getLastName()))
+                .andExpect(jsonPath("$.email").value(customerDTO.getEmail()));
+
+        verify(customerRepository, times(1)).findById(customerId);
+        verify(customerRepository, times(1)).save(any(Customer.class));
     }
 
     private String objectToString(Object object) {
