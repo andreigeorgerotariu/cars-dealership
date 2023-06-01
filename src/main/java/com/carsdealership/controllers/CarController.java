@@ -26,18 +26,18 @@ public class CarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CarDTO>> getAllCars(){
+    public ResponseEntity<List<CarDTO>> getAllCars() {
         return ResponseEntity.ok(carService.getAllCars());
     }
 
     @DeleteMapping("/{carId}")
-    public ResponseEntity<Void> deleteCarById(@PathVariable long carId){
+    public ResponseEntity<Void> deleteCarById(@PathVariable long carId) {
         carService.deleteCarById(carId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{carId}")
-    public ResponseEntity<CarDTO> updateCarById(@PathVariable long carId, @RequestBody @Valid CarDTO carDTO){
+    public ResponseEntity<CarDTO> updateCarById(@PathVariable long carId, @RequestBody @Valid CarDTO carDTO) {
         return ResponseEntity.ok(carService.updateCarById(carId, carDTO));
     }
 }

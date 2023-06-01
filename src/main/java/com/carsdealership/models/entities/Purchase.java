@@ -21,4 +21,8 @@ public class Purchase {
     private long id;
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

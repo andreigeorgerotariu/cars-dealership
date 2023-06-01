@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class Car {
     private int year;
     @Column(name = "price")
     private double price;
+
+    @ManyToMany(mappedBy = "cars")
+    private Set<Customer> customers;
 }
