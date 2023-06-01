@@ -66,13 +66,6 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(objectToString(response), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(CustomerValidationException.class)
-    public ResponseEntity<Object> customerValidationException(CustomerValidationException customerValidationException) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", customerValidationException.getMessage());
-        return new ResponseEntity<>(objectToString(response), HttpStatus.BAD_REQUEST);
-    }
-
     private ResponseEntity<Object> getExceptionResponse(RuntimeException runtimeException, HttpStatus httpStatus) {
         Map<String, Object> result = new HashMap<>();
         result.put("Message: ", runtimeException.getMessage());
