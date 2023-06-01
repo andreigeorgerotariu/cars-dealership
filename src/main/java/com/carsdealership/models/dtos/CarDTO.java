@@ -15,7 +15,7 @@ import java.io.Serializable;
 @ToString
 public class CarDTO implements Serializable {
 
-    private long carId;
+    private long id;
     @NotBlank(message = "Car Brand must not be blank")
     @Size(min = 2, max = 20, message = "Car Brand must contain between 2 and 20 characters")
     private String carBrand;
