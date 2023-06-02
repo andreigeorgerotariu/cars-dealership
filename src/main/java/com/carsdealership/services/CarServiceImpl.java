@@ -80,6 +80,12 @@ public class CarServiceImpl implements CarService {
         return convertCarsToDTO(carsFound);
     }
 
+    @Override
+    public List<CarDTO> findCarByCarBrandAndCarModel(String carBrand, String carModel) {
+        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModel(carBrand, carModel);
+        return convertCarsToDTO(carsFound);
+    }
+
     private List<CarDTO> convertCarsToDTO(List<Car> cars) {
         List<CarDTO> carDTOs = new ArrayList<>();
         for (Car car : cars) {

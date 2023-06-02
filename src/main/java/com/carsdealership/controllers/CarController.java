@@ -43,6 +43,8 @@ public class CarController {
             searchedCars = carService.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
         } else if (carBrand != null && carModel != null && year != null) {
             searchedCars = carService.findCarByCarBrandAndCarModelAndYear(carBrand, carModel, year);
+        } else if (carBrand != null && carModel != null) {
+            searchedCars = carService.findCarByCarBrandAndCarModel(carBrand, carModel);
         } else {
             searchedCars = carService.getAllCars();
         }

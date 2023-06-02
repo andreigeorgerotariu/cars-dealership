@@ -20,4 +20,5 @@ public interface CarRepository extends JpaRepository<Car, Long> {
                                                           @Param("maxPrice") BigDecimal maxPrice);
 
     List<Car> findCarByCarBrandAndCarModelAndYear(String carBrand, String carModel, Integer year);
+    List<Car> findCarByCarBrandAndCarModel(String carBrand, String carModel);
 }
