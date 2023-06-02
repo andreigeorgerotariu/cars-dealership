@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -28,6 +29,16 @@ public class CarController {
     @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
         return ResponseEntity.ok(carService.getAllCars());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CarDTO>> findCarByCarBrandAndCarModelAndYearAndPrice(@RequestParam(required = false) String carBrand,
+                                                                                    @RequestParam(required = false) String carModel,
+                                                                                    @RequestParam(required = false) Integer year,
+                                                                                    @RequestParam(required = false) BigDecimal minPrice,
+                                                                                    @RequestParam(required = false) BigDecimal maxPrice) {
+        List<CarDTO> searchedCars = carService.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
+        return ResponseEntity.ok(searchedCars);
     }
 
     @DeleteMapping("/{carId}")

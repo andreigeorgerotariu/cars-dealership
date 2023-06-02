@@ -25,7 +25,7 @@ public class Car {
     @Column(name = "car_model")
     private String carModel;
     @Column(name = "year")
-    private int year;
+    private Integer year;
     @Column(name = "price")
     private double price;
 
