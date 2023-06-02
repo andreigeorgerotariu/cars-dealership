@@ -37,7 +37,15 @@ public class CarController {
                                                                                     @RequestParam(required = false) Integer year,
                                                                                     @RequestParam(required = false) BigDecimal minPrice,
                                                                                     @RequestParam(required = false) BigDecimal maxPrice) {
-        List<CarDTO> searchedCars = carService.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
+        List<CarDTO> searchedCars;
+
+        if (carBrand != null && carModel != null && year != null && minPrice != null && maxPrice != null) {
+            searchedCars = carService.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
+        } else if (carBrand != null && carModel != null && year != null) {
+            searchedCars = carService.findCarByCarBrandAndCarModelAndYear(carBrand, carModel, year);
+        } else {
+            searchedCars = carService.getAllCars();
+        }
         return ResponseEntity.ok(searchedCars);
     }
 
