@@ -45,6 +45,8 @@ public class CarController {
             searchedCars = carService.findCarByCarBrandAndCarModelAndYear(carBrand, carModel, year);
         } else if (carBrand != null && carModel != null) {
             searchedCars = carService.findCarByCarBrandAndCarModel(carBrand, carModel);
+        } else if (carBrand != null) {
+            searchedCars = carService.findCarByCarBrand(carBrand);
         } else {
             searchedCars = carService.getAllCars();
         }

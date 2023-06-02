@@ -19,4 +19,6 @@ public interface CarService {
     List<CarDTO> findCarByCarBrandAndCarModelAndYear(String carBrand, String carModel, Integer year);
 
     List<CarDTO> findCarByCarBrandAndCarModel(String carBrand, String carModel);
+
+    public List<CarDTO> findCarByCarBrand(String carBrand);
 }
