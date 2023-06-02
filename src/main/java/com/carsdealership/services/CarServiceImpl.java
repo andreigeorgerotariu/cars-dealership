@@ -92,6 +92,12 @@ public class CarServiceImpl implements CarService {
         return convertCarsToDTO(carsFound);
     }
 
+    @Override
+    public List<CarDTO> findCarByCarYear(Integer year) {
+        List<Car> carsFound = carRepository.findCarByYear(year);
+        return convertCarsToDTO(carsFound);
+    }
+
     private List<CarDTO> convertCarsToDTO(List<Car> cars) {
         List<CarDTO> carDTOs = new ArrayList<>();
         for (Car car : cars) {
