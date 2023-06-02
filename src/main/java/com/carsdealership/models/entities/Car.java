@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -28,6 +29,8 @@ public class Car {
     @Column(name = "price")
     private double price;
 
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Purchase> purchases;
     @ManyToMany(mappedBy = "cars")
     private Set<Customer> customers;
 }
