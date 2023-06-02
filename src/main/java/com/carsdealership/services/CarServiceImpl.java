@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,5 +66,44 @@ public class CarServiceImpl implements CarService {
         Car carSaved = carRepository.save(carFound);
         log.info("Car with id " + carId + " was successfully updated");
         return objectMapper.convertValue(carSaved, carDTO.getClass());
+    }
+
+    @Override
+    public List<CarDTO> findCarByCarBrandAndCarModelAndYearAndPrice(String carBrand, String carModel, Integer year, BigDecimal minPrice, BigDecimal maxPrice) {
+        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
+        return convertCarsToDTO(carsFound);
+    }
+
+    @Override
+    public List<CarDTO> findCarByCarBrandAndCarModelAndYear(String carBrand, String carModel, Integer year) {
+        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModelAndYear(carBrand, carModel, year);
+        return convertCarsToDTO(carsFound);
+    }
+
+    @Override
+    public List<CarDTO> findCarByCarBrandAndCarModel(String carBrand, String carModel) {
+        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModel(carBrand, carModel);
+        return convertCarsToDTO(carsFound);
+    }
+
+    @Override
+    public List<CarDTO> findCarByCarBrand(String carBrand) {
+        List<Car> carsFound = carRepository.findCarByCarBrand(carBrand);
+        return convertCarsToDTO(carsFound);
+    }
+
+    @Override
+    public List<CarDTO> findCarByCarYear(Integer year) {
+        List<Car> carsFound = carRepository.findCarByYear(year);
+        return convertCarsToDTO(carsFound);
+    }
+
+    private List<CarDTO> convertCarsToDTO(List<Car> cars) {
+        List<CarDTO> carDTOs = new ArrayList<>();
+        for (Car car : cars) {
+            CarDTO carDTO = objectMapper.convertValue(car, CarDTO.class);
+            carDTOs.add(carDTO);
+        }
+        return carDTOs;
     }
 }
