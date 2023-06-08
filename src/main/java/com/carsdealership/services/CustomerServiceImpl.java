@@ -18,22 +18,18 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final ObjectMapper objectMapper;
-    private final CustomerValidationService customerValidationService;
     private final CustomerRepository customerRepository;
 
     @Autowired
     public CustomerServiceImpl(ObjectMapper objectMapper,
-                               CustomerRepository customerRepository,
-                               CustomerValidationService customerValidationService) {
+                               CustomerRepository customerRepository) {
         this.objectMapper = objectMapper;
         this.customerRepository = customerRepository;
-        this.customerValidationService = customerValidationService;
     }
 
     @Transactional
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        customerValidationService.validateCustomerDTO(customerDTO);
         Customer customer = objectMapper.convertValue(customerDTO, Customer.class);
         Customer savedCustomer = customerRepository.save(customer);
         log.info("Customer " + savedCustomer.getFirstName() + " was successfully created.");
