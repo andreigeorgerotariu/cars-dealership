@@ -4,7 +4,6 @@ import com.carsdealership.models.dtos.CustomerDTO;
 import com.carsdealership.models.entities.Customer;
 import com.carsdealership.repositories.CustomerRepository;
 import com.carsdealership.services.CustomerServiceImpl;
-import com.carsdealership.services.CustomerValidationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,8 +24,6 @@ class CustomerServiceTest {
     private CustomerServiceImpl customerService;
     @Mock
     private ObjectMapper objectMapper;
-    @Mock
-    private CustomerValidationService customerValidationService;
     @Mock
     private CustomerRepository customerRepository;
 
