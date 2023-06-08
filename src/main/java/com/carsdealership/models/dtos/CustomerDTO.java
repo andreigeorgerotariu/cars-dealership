@@ -17,9 +17,11 @@ public class CustomerDTO implements Serializable {
 
     private long id;
     @NotBlank(message = "First name must not be blank")
+    @Pattern(regexp = "^[a-zA-Z\\-\\s]*$", message = "First name contains invalid characters")
     @Size(min = 2, max = 20, message = "First name must contain between 2 and 20 characters" )
     private String firstName;
     @NotBlank(message = "Last name must not be blank")
+    @Pattern(regexp = "^[a-zA-Z\\-\\s]*$", message = "Last name contains invalid characters")
     @Size(min = 2, max = 20, message = "Last name must contain between 2 and 20 characters" )
     private String lastName;
     @NotBlank(message = "Email must not be blank")
