@@ -1,11 +1,13 @@
 package com.carsdealership.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,8 +31,11 @@ public class Car {
     @Column(name = "price")
     private double price;
 
+
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Purchase> purchases;
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "cars")
-    private Set<Customer> customers;
+    Set<Customer> customers = new HashSet<>();
 }
