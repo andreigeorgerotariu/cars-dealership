@@ -46,7 +46,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public void deletePurchaseById(long id) {
-        if (purchaseRepository.existsById(id)){
+        if (purchaseRepository.existsById(id)) {
             purchaseRepository.deleteById(id);
             log.info("Purchase with id " + id + " was successfully deleted.");
         } else {
