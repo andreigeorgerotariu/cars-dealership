@@ -1,12 +1,13 @@
 package com.carsdealership.services;
 
 import com.carsdealership.models.dtos.PurchaseDTO;
+import com.carsdealership.models.dtos.PurchaseResponseDTO;
 
 import java.util.List;
 
 public interface PurchaseService {
 
-    PurchaseDTO createPurchase(PurchaseDTO purchaseDTO);
+    PurchaseResponseDTO createPurchase(PurchaseDTO purchaseDTO);
 
     List<PurchaseDTO> getAllPurchases();
 
