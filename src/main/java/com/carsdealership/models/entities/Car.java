@@ -31,7 +31,6 @@ public class Car {
     @Column(name = "price")
     private double price;
 
-
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Purchase> purchases;
 
