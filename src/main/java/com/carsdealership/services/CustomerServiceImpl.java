@@ -58,9 +58,15 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO updateCustomerById(long id, CustomerDTO customerDTO) {
         Customer customerFound = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " does not exist."));
+
         customerFound.setFirstName(customerDTO.getFirstName());
         customerFound.setLastName(customerDTO.getLastName());
         customerFound.setEmail(customerDTO.getEmail());
+        customerFound.setPhoneNumber(customerDTO.getPhoneNumber());
+        customerFound.setYearOfBirth(customerDTO.getYearOfBirth());
+        customerFound.setAddress(customerDTO.getAddress());
+        customerFound.setCity(customerDTO.getCity());
+
         Customer customerSaved = customerRepository.save(customerFound);
         log.info("Customer with id " + id + " was successfully updated");
         return objectMapper.convertValue(customerSaved, CustomerDTO.class);

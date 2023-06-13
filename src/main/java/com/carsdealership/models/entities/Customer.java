@@ -25,8 +25,14 @@ public class Customer {
     private String lastName;
     @Column(name = "email")
     private String email;
-
-
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    @Column(name = "date_of_birth")
+    private Integer yearOfBirth;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "city")
+    private String city;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Purchase> purchases;
 }

@@ -1,9 +1,7 @@
 package com.carsdealership.models.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import com.carsdealership.models.constrains.AgeAboveOrEqual;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -32,4 +30,23 @@ public class CustomerDTO implements Serializable {
             flags = Pattern.Flag.CASE_INSENSITIVE,
             message = "Email is not valid")
     private String email;
+
+    @NotBlank(message = "Phone number must not be blank")
+    @Pattern(regexp = "\\d{10}", message = "Phone number must be a 10 digit number")
+    private String phoneNumber;
+
+    @NotNull(message = "Year of birth must not be null")
+    @AgeAboveOrEqual(message = "Customer must be at least 18 years old")
+    private Integer yearOfBirth;
+
+    @NotBlank(message = "Address must not be blank.")
+    @Pattern(regexp = "^[a-zA-Z0-9\\-\\s.,]*$", message = "Address contains invalid characters")
+    @Size(min = 2, max = 50, message = "Address must contain between 2 and 50 characters" )
+    private String address;
+
+
+    @NotBlank(message = "City must not be blank.")
+    @Pattern(regexp = "^[a-zA-Z\\-\\s]*$", message = "City contains invalid characters")
+    @Size(min = 2, max = 20, message = "City must contain between 2 and 20 characters" )
+    private String city;
 }
