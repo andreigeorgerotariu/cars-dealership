@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -27,14 +25,11 @@ public class Car {
     @Column(name = "car_model")
     private String carModel;
     @Column(name = "year")
-    private Integer year;
+    private Integer year; // SQL Date
     @Column(name = "price")
     private double price;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Purchase> purchases;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "cars")
-    Set<Customer> customers = new HashSet<>();
+    private Set<Purchase> purchases;
 }
