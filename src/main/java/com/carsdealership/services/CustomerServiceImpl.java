@@ -71,4 +71,12 @@ public class CustomerServiceImpl implements CustomerService {
         log.info("Customer with id " + id + " was successfully updated");
         return objectMapper.convertValue(customerSaved, CustomerDTO.class);
     }
+
+    @Override
+    public List<CustomerDTO> searchCustomers(String firstName, String lastName, String email, String phoneNumber, String city) {
+        List<Customer> customersFound = customerRepository.searchCustomers(firstName, lastName, email, phoneNumber, city);
+        List<CustomerDTO> customersFoundDTO = new ArrayList<>();
+        customersFound.forEach(customer -> customersFoundDTO.add(objectMapper.convertValue(customer, CustomerDTO.class)));
+        return customersFoundDTO;
+    }
 }

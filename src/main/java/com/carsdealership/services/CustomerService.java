@@ -13,4 +13,6 @@ public interface CustomerService {
     void deleteCustomerById(long id);
 
     CustomerDTO updateCustomerById(long id, CustomerDTO customerDTO);
+
+    List<CustomerDTO> searchCustomers(String firstName, String lastName, String email, String phoneNumber, String city);
 }

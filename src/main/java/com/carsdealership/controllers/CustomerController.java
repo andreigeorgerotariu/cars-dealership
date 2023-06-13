@@ -40,4 +40,16 @@ public class CustomerController {
     public ResponseEntity<CustomerDTO> updateCustomerById(@PathVariable long id, @RequestBody @Valid CustomerDTO customerDTO) {
         return ResponseEntity.ok(customerService.updateCustomerById(id, customerDTO));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CustomerDTO>> searchCustomers(
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+            @RequestParam(value = "city", required = false) String city) {
+
+        List<CustomerDTO> customers = customerService.searchCustomers(firstName, lastName, email, phoneNumber, city);
+        return ResponseEntity.ok(customers);
+    }
 }
