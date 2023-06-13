@@ -14,13 +14,6 @@ public interface CarService {
 
     CarDTO updateCarById(long carId, CarDTO carDTO);
 
-    List<CarDTO> findCarByCarBrandAndCarModelAndYearAndPrice(String carBrand, String carModel, Integer year, BigDecimal minPrice, BigDecimal maxPrice);
-
-    List<CarDTO> findCarByCarBrandAndCarModelAndYear(String carBrand, String carModel, Integer year);
-
-    List<CarDTO> findCarByCarBrandAndCarModel(String carBrand, String carModel);
-
-    public List<CarDTO> findCarByCarBrand(String carBrand);
-
-    public List<CarDTO> findCarByCarYear(Integer year);
+    List<CarDTO> searchCars(String carBrand, String carModel, Integer minYear, Integer maxYear,
+                            BigDecimal minPrice, BigDecimal maxPrice);
 }
