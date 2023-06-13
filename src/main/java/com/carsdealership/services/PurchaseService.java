@@ -9,7 +9,7 @@ public interface PurchaseService {
 
     PurchaseResponseDTO createPurchase(PurchaseDTO purchaseDTO);
 
-    List<PurchaseDTO> getAllPurchases();
+    List<PurchaseResponseDTO> getAllPurchases();
 
     void deletePurchaseById(long purchaseId);
 }

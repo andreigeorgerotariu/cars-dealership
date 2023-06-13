@@ -48,7 +48,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         Purchase purchase = objectMapper.convertValue(purchaseDTO, Purchase.class);
         Customer customer = customerRepository.findById(purchaseDTO.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException("Customer not found."));
         Set<Car> cars = new HashSet<>();
-        List<CarDTO> carDTOList = new ArrayList<>();
+        Set<CarDTO> carDTOList = new HashSet<>();
         double totalPrice = 0;
 
         for (CarIdDTO carIdDTO : purchaseDTO.getPurchaseCarIdList()) {
@@ -66,7 +66,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         return getPurchaseResponseDTO(carDTOList, totalPrice, savedPurchase);
     }
 
-    private PurchaseResponseDTO getPurchaseResponseDTO(List<CarDTO> carDTOList, double totalPrice, Purchase savedPurchase) {
+    private PurchaseResponseDTO getPurchaseResponseDTO(Set<CarDTO> carDTOList, double totalPrice, Purchase savedPurchase) {
         PurchaseResponseDTO purchaseResponseDTO = new PurchaseResponseDTO();
         purchaseResponseDTO.setId(savedPurchase.getId());
         purchaseResponseDTO.setCustomerId(savedPurchase.getCustomer().getId());
@@ -78,10 +78,32 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public List<PurchaseDTO> getAllPurchases() {
+    public List<PurchaseResponseDTO> getAllPurchases() {
         List<Purchase> purchasesFound = purchaseRepository.findAll();
-        List<PurchaseDTO> purchasesFoundDTO = new ArrayList<>();
-        purchasesFound.forEach(purchase -> purchasesFoundDTO.add(objectMapper.convertValue(purchase, PurchaseDTO.class)));
+        List<PurchaseResponseDTO> purchasesFoundDTO = new ArrayList<>();
+        for (Purchase purchase : purchasesFound) {
+
+            PurchaseResponseDTO purchaseResponseDTO = new PurchaseResponseDTO();
+            purchaseResponseDTO.setId(purchase.getId());
+            purchaseResponseDTO.setCustomerId(purchase.getCustomer().getId());
+            purchaseResponseDTO.setPurchaseDate(LocalDateTime.now());
+            purchaseResponseDTO.setTotalPrice(purchase.getTotalPrice());
+            purchaseResponseDTO.setPaymentMethod(purchase.getPaymentMethod());
+
+            Set<CarDTO> carDTOSet = new HashSet<>();
+
+            for (Car car : purchase.getCars()) {
+                CarDTO carDTO = new CarDTO();
+                carDTO.setId(car.getId());
+                carDTO.setCarBrand(car.getCarBrand());
+                carDTO.setCarModel(car.getCarModel());
+                carDTO.setYear(car.getYear());
+                carDTO.setPrice(car.getPrice());
+                carDTOSet.add(carDTO);
+            }
+            purchasesFoundDTO.add(purchaseResponseDTO);
+            purchaseResponseDTO.setCarList(carDTOSet);
+        }
         return purchasesFoundDTO;
     }
 

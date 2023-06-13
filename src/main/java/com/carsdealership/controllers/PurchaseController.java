@@ -22,17 +22,17 @@ public class PurchaseController {
     }
 
     @PostMapping
-    public ResponseEntity<PurchaseResponseDTO> createPurchase(@RequestBody @Valid PurchaseDTO purchaseDTO){
+    public ResponseEntity<PurchaseResponseDTO> createPurchase(@RequestBody @Valid PurchaseDTO purchaseDTO) {
         return ResponseEntity.ok(purchaseService.createPurchase(purchaseDTO));
     }
 
     @GetMapping
-    public ResponseEntity<List<PurchaseDTO>> getAllPurchases(){
+    public ResponseEntity<List<PurchaseResponseDTO>> getAllPurchases() {
         return ResponseEntity.ok(purchaseService.getAllPurchases());
     }
 
     @DeleteMapping("/{purchaseId}")
-    public ResponseEntity<Void> deletePurchaseById(@PathVariable long purchaseId){
+    public ResponseEntity<Void> deletePurchaseById(@PathVariable long purchaseId) {
         purchaseService.deletePurchaseById(purchaseId);
         return ResponseEntity.noContent().build();
     }
