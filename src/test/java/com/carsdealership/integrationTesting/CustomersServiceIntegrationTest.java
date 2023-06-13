@@ -67,7 +67,7 @@ class CustomersServiceIntegrationTest {
     }
 
     @Test
-    void TestAllCustomersShouldPass() throws Exception {
+    void TestGetAllCustomersShouldPass() throws Exception {
         Customer customer1 = Customer.builder()
                 .id(1L)
                 .firstName("Joe")
