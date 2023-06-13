@@ -69,41 +69,10 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarDTO> findCarByCarBrandAndCarModelAndYearAndPrice(String carBrand, String carModel, Integer year, BigDecimal minPrice, BigDecimal maxPrice) {
-        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
-        return convertCarsToDTO(carsFound);
-    }
-
-    @Override
-    public List<CarDTO> findCarByCarBrandAndCarModelAndYear(String carBrand, String carModel, Integer year) {
-        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModelAndYear(carBrand, carModel, year);
-        return convertCarsToDTO(carsFound);
-    }
-
-    @Override
-    public List<CarDTO> findCarByCarBrandAndCarModel(String carBrand, String carModel) {
-        List<Car> carsFound = carRepository.findCarByCarBrandAndCarModel(carBrand, carModel);
-        return convertCarsToDTO(carsFound);
-    }
-
-    @Override
-    public List<CarDTO> findCarByCarBrand(String carBrand) {
-        List<Car> carsFound = carRepository.findCarByCarBrand(carBrand);
-        return convertCarsToDTO(carsFound);
-    }
-
-    @Override
-    public List<CarDTO> findCarByCarYear(Integer year) {
-        List<Car> carsFound = carRepository.findCarByYear(year);
-        return convertCarsToDTO(carsFound);
-    }
-
-    private List<CarDTO> convertCarsToDTO(List<Car> cars) {
-        List<CarDTO> carDTOs = new ArrayList<>();
-        for (Car car : cars) {
-            CarDTO carDTO = objectMapper.convertValue(car, CarDTO.class);
-            carDTOs.add(carDTO);
-        }
-        return carDTOs;
+    public List<CarDTO> searchCars(String carBrand, String carModel, Integer minYear, Integer maxYear, BigDecimal minPrice, BigDecimal maxPrice) {
+        List<Car> carsFound = carRepository.searchCars(carBrand, carModel, minYear, maxYear, minPrice, maxPrice);
+        List<CarDTO> carsFoundDTO = new ArrayList<>();
+        carsFound.forEach(car -> carsFoundDTO.add(objectMapper.convertValue(car, CarDTO.class)));
+        return carsFoundDTO;
     }
 }

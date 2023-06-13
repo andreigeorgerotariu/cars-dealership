@@ -32,27 +32,16 @@ public class CarController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CarDTO>> findCarByCarBrandAndCarModelAndYearAndPrice(@RequestParam(required = false) String carBrand,
-                                                                                    @RequestParam(required = false) String carModel,
-                                                                                    @RequestParam(required = false) Integer year,
-                                                                                    @RequestParam(required = false) BigDecimal minPrice,
-                                                                                    @RequestParam(required = false) BigDecimal maxPrice) {
-        List<CarDTO> searchedCars;
-
-        if (carBrand != null && carModel != null && year != null && minPrice != null && maxPrice != null) {
-            searchedCars = carService.findCarByCarBrandAndCarModelAndYearAndPrice(carBrand, carModel, year, minPrice, maxPrice);
-        } else if (carBrand != null && carModel != null && year != null) {
-            searchedCars = carService.findCarByCarBrandAndCarModelAndYear(carBrand, carModel, year);
-        } else if (carBrand != null && carModel != null) {
-            searchedCars = carService.findCarByCarBrandAndCarModel(carBrand, carModel);
-        } else if (carBrand != null) {
-            searchedCars = carService.findCarByCarBrand(carBrand);
-        } else if (year != null) {
-            searchedCars = carService.findCarByCarYear(year);
-        } else {
-            searchedCars = carService.getAllCars();
-        }
-        return ResponseEntity.ok(searchedCars);
+    public ResponseEntity<List<CarDTO>> searchCars(
+            @RequestParam(required = false) String carBrand,
+            @RequestParam(required = false) String carModel,
+            @RequestParam(required = false) Integer minYear,
+            @RequestParam(required = false) Integer maxYear,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice
+    ) {
+        List<CarDTO> carsFound = carService.searchCars(carBrand, carModel, minYear, maxYear, minPrice, maxPrice);
+        return ResponseEntity.ok(carsFound);
     }
 
     @DeleteMapping("/{carId}")
