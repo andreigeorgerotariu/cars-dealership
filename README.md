@@ -9,10 +9,10 @@ This repository contains the source code for a web application that serves as a 
 - Maven
 - PostgreSQL
 - H2 in-memory database
-- MockMVC (for integration tests)
-- JUnit (for unit tests)
-- Mockito (to mock dependencies for unit tests)
-- Hibernate as ORM (provided by Spring)
+- MockMVC 
+- JUnit 
+- Mockito 
+- Hibernate as ORM 
 
 ## Features
 
