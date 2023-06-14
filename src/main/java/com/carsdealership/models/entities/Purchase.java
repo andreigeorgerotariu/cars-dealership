@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -33,10 +34,20 @@ public class Purchase {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "purchases_cars",
             joinColumns = @JoinColumn(name = "purchase_id"),
             inverseJoinColumns = @JoinColumn(name = "car_id"))
-    private Set<Car> cars;
+    private Set<Car> cars = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "Purchase{" +
+                "id=" + id +
+                ", purchaseDate=" + purchaseDate +
+                ", totalPrice=" + totalPrice +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", customerId=" + (customer != null ? customer.getId() : null) +
+                '}';
+    }
 }

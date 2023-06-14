@@ -1,12 +1,9 @@
 package com.carsdealership.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Builder
@@ -29,7 +26,6 @@ public class Car {
     @Column(name = "price")
     private double price;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "cars")
-    private Set<Purchase> purchases;
+    @ManyToMany(mappedBy = "cars", fetch = FetchType.LAZY)
+    private Set<Purchase> purchases = new HashSet<>();
 }
