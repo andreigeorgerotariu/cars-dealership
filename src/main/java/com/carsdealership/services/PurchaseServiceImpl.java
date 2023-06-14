@@ -14,10 +14,11 @@ import com.carsdealership.repositories.CarRepository;
 import com.carsdealership.repositories.CustomerRepository;
 import com.carsdealership.repositories.PurchaseRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         this.carRepository = carRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public PurchaseResponseDTO createPurchase(PurchaseDTO purchaseDTO) {
         Purchase purchase = objectMapper.convertValue(purchaseDTO, Purchase.class);
@@ -61,6 +62,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         purchase.setCustomer(customer);
         purchase.setCars(cars);
+        purchase.setPurchaseDate(LocalDateTime.now());
+        purchase.setTotalPrice(totalPrice);
         Purchase savedPurchase = purchaseRepository.save(purchase);
         log.info("Purchase with id " + savedPurchase.getId() + " made at " + savedPurchase.getPurchaseDate() + " was successfully created.");
         return getPurchaseResponseDTO(carDTOList, totalPrice, savedPurchase);
@@ -77,9 +80,10 @@ public class PurchaseServiceImpl implements PurchaseService {
         return purchaseResponseDTO;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PurchaseResponseDTO> getAllPurchases() {
-        List<Purchase> purchasesFound = purchaseRepository.findAll();
+        List<Purchase> purchasesFound = purchaseRepository.findAllWithCars();
         List<PurchaseResponseDTO> purchasesFoundDTO = new ArrayList<>();
         for (Purchase purchase : purchasesFound) {
 
